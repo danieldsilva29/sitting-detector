@@ -1,0 +1,7 @@
+backend/venv
+backend/__pycache__
+.DS_Store
+backend/.DS_Store
+extension/.DS_Store
+shared/.DS_Store
+website/.DS_Store

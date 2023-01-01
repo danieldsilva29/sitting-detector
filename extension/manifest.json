@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+    "name": "Sitting Detector",
+    "description": "Closes all tabs so you don't become fatshaan",
+    "version": "0.0.1",
+    "background_page": "background.html",
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ],
+    "permissions": [
+        "tabs",
+        "storage",
+        "<all_urls>"
+    ],
+    "browser_action": {
+        "browser_style": true,
+        "default_title": "Actual FISH",
+        "default_popup": "popup.html"
+    },
+    "externally_connectable": {
+        "matches": ["*://*.google.com/*"]
+    }
+}
