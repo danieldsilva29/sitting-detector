@@ -25,11 +25,13 @@ export async function getMedia(video, canvas) {
     while (!(width && height)) {}
     canvas.width = width;
     canvas.height = height;
-    context.drawImage(video, 0, 0, width, height);
+    const facePresent = context.drawImage(video, 0, 0, width, height);
 
     const data = canvas.toDataURL("image/png");
-    const data = await fetch("/video", {
+    const resp = await fetch("/video", {
         method: 'POST',
         body: data
     });
+    const d = resp.json()
+    return d.message;
 }

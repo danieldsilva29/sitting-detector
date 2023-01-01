@@ -5,3 +5,5 @@ backend/.DS_Store
 extension/.DS_Store
 shared/.DS_Store
 website/.DS_Store
+.vscode
+.idea
