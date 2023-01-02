@@ -48,16 +48,6 @@ function requestBackend() {
     })
 }
 
-function getPermission() {
-    chrome.tabs.create({ url: "./request.html" }, tab => {
-        // chrome.scripting.executeScript({
-        //     target: { tabId: tab.id },
-        //     files: ['script.js'],
-        // })
-        //chrome.tabs.remove(tab.id)
-    })
-}
-
 async function x() {
     if(!shouldContinue) return;
     const browser = chrome;
@@ -66,7 +56,7 @@ async function x() {
     if ( isBlocked ) {
         shouldContinue = false
         console.log("is blocked is true")
-        getPermission();
+        requestBackend();
         console.log("complete permission")
     }
     else {
@@ -81,7 +71,7 @@ async function x() {
 
             if(diff >= timeToBlock) {
                 shouldContinue = false
-                getPermission();
+                requestBackend();
                 console.log("complete permission")  
                 //cleanup();
             }
