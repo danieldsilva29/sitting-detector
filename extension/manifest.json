@@ -7,26 +7,18 @@
         "service_worker": "background.js",
         "type": "module"
     },
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["content.js"],
-            "run_at": "document_start"
-        }
-    ],
     "permissions": [
         "tabs",
-        "storage"
+        "storage",
+        "scripting",
+        "activeTab"
     ],
     "action": {
         "browser_style": true,
         "default_title": "Actual FISH",
         "default_popup": "popup.html"
     },
-    "externally_connectable": {
-        "matches": ["https://*/*"]
-    },
     "host_permissions": [
-        "*://*.example.org/"
+        "chrome-extension://*"
     ]
 }

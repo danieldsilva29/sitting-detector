@@ -26,8 +26,8 @@ function closeAllTabs() {
 let shouldContinue = true;
 
 function sendMsg() {
-    console.log("before sendMessage second")
-    // chrome.runtime.onConnect.addListener(() => {
+    chrome.runtime.connect()
+    //chrome.runtime.onConnect.addListener(() => {
         console.log("connected")
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             console.log("tab queried")
@@ -37,35 +37,52 @@ function sendMsg() {
                 shouldContinue = false
             })
         })
-    // })
+    //})
     
     browser.storage.local.set({'isBlocked': true});
 }
+
+function requestBackend() {
+    navigator.mediaDevices.getUserMedia({video: true, audio: false}, function(stream) {
+        console.log(stream)
+    })
+}
+
+function getPermission() {
+    chrome.tabs.create({ url: "./request.html" }, tab => {
+        // chrome.scripting.executeScript({
+        //     target: { tabId: tab.id },
+        //     files: ['script.js'],
+        // })
+        //chrome.tabs.remove(tab.id)
+    })
+}
+
 async function x() {
     if(!shouldContinue) return;
     const browser = chrome;
     console.log('fishy was here');
     const { isBlocked } = await browser.storage.local.get('isBlocked');
     if ( isBlocked ) {
+        shouldContinue = false
         console.log("is blocked is true")
-        sendMsg();
+        getPermission();
+        console.log("complete permission")
     }
     else {
-        console.log("asdfjhasdfasdf")
+        console.log("blocked is false")
         const { isIntervalSet } = await browser.storage.local.get('isIntervalSet');
         if (isIntervalSet)  {
             const { startTime } = await browser.storage.local.get('startTime');
             const { timeToBlock } = await browser.storage.local.get('timeToBlock');
-
-            console.log(startTime)
             
             const currentDate = (new Date()).getTime();
             const diff = (currentDate - startTime);
-            console.log(diff)
-            console.log(timeToBlock)
 
             if(diff >= timeToBlock) {
-                sendMsg();  
+                shouldContinue = false
+                getPermission();
+                console.log("complete permission")  
                 //cleanup();
             }
         }

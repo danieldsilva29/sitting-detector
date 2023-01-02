@@ -13,18 +13,26 @@ async function getMedia(video, canvas) {
     } catch (err) {
         console.error(`An exception occured: ${error}`);
     }
-    video.addEventListener("canplay", event => {
-        console.log("canplay")
-        if (!streaming) {
-            height = (video.videoHeight / video.videoWidth) * innerWidth;
+    // video.addEventListener("canplay", event => {
+    //     console.log("canplay")
+    //     if (!streaming) {
+    //         height = (video.videoHeight / video.videoWidth) * innerWidth;
 
-            video.setAttribute("width", width);
-            video.setAttribute("height", height);
-            canvas.setAttribute("width", width);
-            canvas.setAttribute("height", height);
-            streaming = true;
-        }
-    });
+    //         video.setAttribute("width", width);
+    //         video.setAttribute("height", height);
+    //         canvas.setAttribute("width", width);
+    //         canvas.setAttribute("height", height);
+    //         streaming = true;
+    //     }
+    // });
+
+    height = (video.videoHeight / video.videoWidth) * innerWidth;
+    video.setAttribute("width", width);
+    video.setAttribute("height", height);
+    canvas.setAttribute("width", width);
+    canvas.setAttribute("height", height);
+    streaming = true;
+
     const context = canvas.getContext('2d');
     while (!(width && height)) {}
     canvas.width = width;
@@ -32,6 +40,7 @@ async function getMedia(video, canvas) {
     const facePresent = context.drawImage(video, 0, 0, width, height);
 
     const data = canvas.toDataURL("image/png");
+    console.log("width: ", width)
     const resp = await fetch("http://localhost:8000/video", {
         method: 'POST',
         body: data
