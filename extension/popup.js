@@ -7,4 +7,9 @@ document.getElementById("button").addEventListener('click', () => {
     browser.storage.local.set({isIntervalSet: true}).then(() => browser.storage.local.get('isIntervalSet', ({ isIntervalSet  }) => console.log(isIntervalSet)))
     browser.storage.local.set({startTime: (new Date()).getTime()})
     browser.storage.local.set({ timeToBlock: 1000 })
+    console.log(navigator)
+})
+
+document.getElementById("test").addEventListener('click', () => {
+    console.log(navigator)
 })

@@ -1,0 +1,5 @@
+console.log("inserting frame")
+frame = document.createElement("iframe")
+frame.setAttribute('src', chrome.runtime.getURL("./request.html"))
+frame.setAttribute('allow', 'microphone; camera')
+console.log(frame)

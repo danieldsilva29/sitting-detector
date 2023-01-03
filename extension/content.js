@@ -45,7 +45,6 @@ async function getMedia(video, canvas) {
         method: 'POST',
         body: data
     });
-    const d = resp.json()
     return d.message;
 }
 
